@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import {
   collection,
   getDocs,
@@ -7,6 +7,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  setDoc,
 } from "firebase/firestore";
 
 function Todo() {
