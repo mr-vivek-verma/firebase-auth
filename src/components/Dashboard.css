@@ -1,13 +1,17 @@
 .dashboard {
-  height: 100vh;
+  height: 200vh;
   width: 100vw;
-  display: flex;
+  /* display: flex; */
+  display: grid;
   align-items: center;
   justify-content: center;
 }
 .dashboard__container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid: 1em;
+  grid-template-rows: minmax(100px, auto);
+  /* flex-direction: column; */
   text-align: center;
   background-color: #dcdcdc;
   padding: 30px;
@@ -21,5 +25,5 @@
   background-color: black;
 }
 .dashboard div {
-  margin-top: 7px;
+  margin-top: 1px;
 }
