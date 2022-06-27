@@ -14,27 +14,27 @@ function Todo() {
   const [newName, setNewName] = useState("");
   const [newAge, setNewAge] = useState(0);
 
-  const [users, setUsers] = useState([]);
-  const userCollectionRef = collection(db, "users");
+  const [todos, setTodos] = useState([]);
+  const userCollectionRef = collection(db, "todos");
   const createUser = async () => {
     await addDoc(userCollectionRef, { name: newName, age: Number(newAge) });
   };
 
   const updateUser = async (id, age) => {
-    const userDoc = doc(db, "users", id);
+    const userDoc = doc(db, "todos", id);
     const newFields = { age: age + 1 };
     await updateDoc(userDoc, newFields);
   };
 
   const deleteUser = async (id) => {
-    const userDoc = doc(db, "users", id);
+    const userDoc = doc(db, "todos", id);
     await deleteDoc(userDoc);
   };
 
   useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(userCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setTodos(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getUsers();
   }, []);
@@ -54,22 +54,22 @@ function Todo() {
           setNewAge(e.target.value);
         }}
       />
-      <button onClick={createUser}>Create users</button>
-      {users.map((users) => {
+      <button onClick={createUser}>Create todo list</button>
+      {todos.map((todos) => {
         return (
           <div>
-            <h1>Name:{users.name}</h1>
-            <h1>Age:{users.age}</h1>
+            <h1>Name:{todos.name}</h1>
+            <h1>Age:{todos.age}</h1>
             <button
               onClick={() => {
-                updateUser(users.id, users.age);
+                updateUser(todos.id, todos.age);
               }}
             >
               Increase Age
             </button>
             <button
               onClick={() => {
-                deleteUser(users.id);
+                deleteUser(todos.id);
               }}
             >
               deleteUser

@@ -9,17 +9,28 @@ function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
+
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const q = query(
+        collection(db, "users"),
+        where("email", "===", user.email)
+      );
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
       setName(data.name);
+      console.log("name", data);
     } catch (err) {
-      console.error(err);
-      alert("An error occured while fetching user data");
+      console.log(err);
+      // alert("An error occured while fetching user data");
     }
   };
+
+  // if (user !== null) {
+  //   user.providerData.forEach((users) => {
+  //     console.log("Sign-in provider: " + users.providerId);
+  //   });
+  // }
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
