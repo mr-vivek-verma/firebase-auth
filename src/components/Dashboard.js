@@ -12,9 +12,13 @@ function Dashboard() {
 
   const fetchUserName = async () => {
     try {
+      //  const q = query(
+      //    collection(db, "users"),
+      //   where("email", "===", user.email)
+      //  );
       const q = query(
-        collection(db, "users"),
-        where("email", "===", user.email)
+        collection(db, "todos"),
+        where("email", "===", localStorage.getItem("list"))
       );
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
