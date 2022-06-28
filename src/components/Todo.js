@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
 import {
   collection,
   getDocs,
@@ -13,11 +15,25 @@ import {
 function Todo() {
   const [newName, setNewName] = useState("");
   const [newAge, setNewAge] = useState(0);
+  const [newEmail, setNewEmail] = useState(0);
+
+  useEffect(() => {
+    let unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      setNewEmail(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const [todos, setTodos] = useState([]);
   const userCollectionRef = collection(db, "todos");
   const createUser = async () => {
-    await addDoc(userCollectionRef, { name: newName, age: Number(newAge) });
+    await addDoc(userCollectionRef, {
+      name: newName,
+      age: Number(newAge),
+      // email: `${email.email}`,
+      email: `${newEmail}`,
+    });
   };
 
   const updateUser = async (id, age) => {
